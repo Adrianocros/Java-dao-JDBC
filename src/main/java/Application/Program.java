@@ -9,14 +9,12 @@ import java.util.Date;
 
 public class Program {
     public static void main(String[] args) {
-        Department obj = new Department(1,"Livros");
-        Seller seller = new Seller(1,"AdrianoB","adriano@gmail.com",new Date(),3000.00,obj);
 
         SellerDAO sellerDAO = DAOFactory.createSellerDao();
 
+        Seller seller = sellerDAO.findById(3);
+
         System.out.println(seller);
-        System.out.println();
-        System.out.println(obj);
 
     }
 }
