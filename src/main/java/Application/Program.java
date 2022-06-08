@@ -23,12 +23,15 @@ public class Program {
         for(Seller obj : list){
             System.out.println(obj);
         }
-        System.out.println("\n=== Teste 03 Sellet Seller findAll ===");
+        System.out.println("\n=== Teste 03 Seller findAll ===");
         list = sellerDAO.findAll();
         for(Seller obj : list){
             System.out.println(obj);
         }
 
-
+        System.out.println("\n=== Teste 04 Seller Insert ===");
+        Seller newSeller = new Seller(null,"Maria","maria@hotmail.com",new Date(), 4400.00,department);
+        sellerDAO.insert(newSeller);
+        System.out.println("Novo vendedor cadastrado: " + newSeller.getId() + " - Nome: " + newSeller.getName());
     }
 }
