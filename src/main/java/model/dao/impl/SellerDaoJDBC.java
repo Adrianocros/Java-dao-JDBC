@@ -70,7 +70,6 @@ public class SellerDaoJDBC  implements SellerDAO {
             DB.closeResultSet(rs);
         }
     }
-
     private Seller instantieteSeller(ResultSet rs, Department dep) throws SQLException{
         Seller obj = new  Seller();
         obj.setId(rs.getInt("Id"));
@@ -92,7 +91,41 @@ public class SellerDaoJDBC  implements SellerDAO {
 
     @Override
     public List<Seller> findAll() {
-        return null;
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = conn.prepareStatement(
+                    "SELECT seller.*,department.Name as DepName "
+                            + "FROM seller INNER JOIN department "
+                            + "ON seller.departmentId = department.Id "
+                            + "ORDER BY Name" );
+
+            rs = st.executeQuery();
+
+            List<Seller> list = new ArrayList<>();
+            Map<Integer, Department> map  = new HashMap<>();
+
+            //Verifica se veio resultado e se o Depto existe e faz
+            while (rs.next()){
+
+                Department dep = map.get(rs.getInt("DepartmentId"));
+
+                //Instancia todos os vendedores sem repetição de departamento
+                if(dep == null){
+                    dep = instantieteDepartment(rs);
+                    map.put(rs.getInt("DepartmentId"),dep);
+                }
+                Seller obj = instantieteSeller(rs, dep);
+                list.add(obj);
+            }
+            return list;
+        }catch (SQLException e){
+            throw new DBException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+        }
     }
 
     @Override
