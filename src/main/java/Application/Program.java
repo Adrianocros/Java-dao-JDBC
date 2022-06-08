@@ -43,14 +43,11 @@ public class Program {
         sellerDAO.update(seller);
         System.out.println("Update realizado! ");
 
-
         System.out.println("\n=== Teste 06 Seller DELETE ===");
         System.out.print("Informe o ID para ser Deletado: ");
         int id = scanner.nextInt();
         sellerDAO.deleteById(id);
         System.out.println("Vendedor deletado! ");
-
-
     }
 
 }
