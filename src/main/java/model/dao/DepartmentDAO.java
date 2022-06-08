@@ -11,7 +11,6 @@ public interface DepartmentDAO {
     void update(Deprecated obj);
     void deleteById(Integer id);
     Deprecated findById(Integer id);
-
     List<Department> findAll();
 
 }
